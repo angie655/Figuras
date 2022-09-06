@@ -1,15 +1,15 @@
 //esenaario
 const scene = new THREE.Scene();
-scene.background= new THREE.Color(0xE8B6FC);
+scene.background= new THREE.Color(0x464646);
 
-var fogColor = new THREE.Color(0xFFEE85);
+/*var fogColor = new THREE.Color(0xFFEE85);
 scene.background = fogColor; 
 scene.fog = new THREE.Fog(fogColor, 0.30,8);
 
 var loader = new THREE.TextureLoader()
 loader.load("imegen/atardecer.jpg", function(texture){
 	scene.background = texture;
-})
+})*/
 
 
 //camara
@@ -22,18 +22,32 @@ document.body.appendChild( renderer.domElement );
 
 //geometria
 const geometry = new THREE.SphereGeometry( 15, 32, 16 );
-const material = new THREE.MeshBasicMaterial( { color: 0xFFEE85} );
-const sphere = new THREE.Mesh( geometry, material );
-scene.add( sphere );
-camera.position.z = 60;
 
+const edges=new THREE.EdgesGeometry(geometry);
+	const line=new THREE.LineSegments(edges,new THREE.LineBasicMaterial({color:0x23BAC4}))
+	scene.add(line)
 
+const textureLoader=new THREE.TextureLoader()
+
+const matcap = textureLoader.load( "../imegen/raro.jpg" );
+const material1 = new THREE.MeshMatcapMaterial();
+material1.matcap=matcap
+material1.flatShading=true
+
+const sphere = new THREE.Mesh( geometry, material1 );
+scene.add( sphere);
+
+camera.position.z= 40;
 // funcion
 
 function animate() {
 	requestAnimationFrame( animate );
-    sphere.rotation.x += 0.01; 
-	sphere.rotation.y += 0.02;
+    sphere.rotation.x += 0.002; 
+	sphere.rotation.y += 0.001;
+
+	line.rotation.x += 0.002; 
+	line.rotation.y += 0.001;
+	
 	renderer.render( scene, camera );
 }
 animate();

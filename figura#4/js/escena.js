@@ -1,14 +1,10 @@
 //esenaario
 const scene = new THREE.Scene();
-scene.background= new THREE.Color(0xE8B6FC);
 
-var fogColor = new THREE.Color(0xFFEE85);
-scene.background = fogColor; 
-scene.fog = new THREE.Fog(fogColor, 0.30,8);
+var loader= new THREE.TextureLoader();
 
-var loader = new THREE.TextureLoader()
-loader.load("imegen/colores.jpg", function(texture){
-	scene.background = texture;
+loader.load("../imegen/finca.jpg", function(texture){
+	scene.background=texture;
 })
 
 
@@ -22,10 +18,22 @@ document.body.appendChild( renderer.domElement );
 
 //geometria
 const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-const material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
+
+ const edges=new THREE.EdgesGeometry(geometry);
+	const line=new THREE.LineSegments(edges,new THREE.LineBasicMaterial({color:0xFC8600}))
+	scene.add(line) 
+
+const textureLoader=new THREE.TextureLoader()
+
+const matcap=textureLoader.load("../imegen/cafe.jpg")
+const material = new THREE.MeshMatcapMaterial();
+material.matcap=matcap
+material.flatShading=true
+
 const cube = new THREE.Mesh( geometry, material );
 scene.add( cube );
-camera.position.z = 4;
+
+camera.position.z = 2;
 
 
 // funcion
@@ -34,6 +42,9 @@ function animate() {
 	requestAnimationFrame( animate );
     cube.rotation.x += 0.01; 
 	cube.rotation.y += 0.02;
+
+	line.rotation.x += 0.01; 
+	line.rotation.y += 0.02;
 	renderer.render( scene, camera );
 }
 animate();
