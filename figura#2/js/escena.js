@@ -2,15 +2,6 @@
 const scene = new THREE.Scene();
 scene.background= new THREE.Color(0x464646);
 
-/*var fogColor = new THREE.Color(0xFFEE85);
-scene.background = fogColor; 
-scene.fog = new THREE.Fog(fogColor, 0.30,8);
-
-var loader = new THREE.TextureLoader()
-loader.load("imegen/atardecer.jpg", function(texture){
-	scene.background = texture;
-})*/
-
 
 //camara
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
